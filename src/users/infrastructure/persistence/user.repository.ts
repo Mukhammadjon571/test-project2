@@ -1,6 +1,6 @@
 import { User } from '../../domain/user';
 import { NullableType } from 'src/utils/types/nullable.type';
-import {  SortUserDto } from '../../dto/query-user.dto';
+import {  QueryUserByEmailDTO, SortUserDto } from '../../dto/query-user.dto';
 import { IPaginationOptions } from 'src/utils/types/pagination-options';
 import { EntityCondition } from 'src/utils/types/entity-condition.type';
 import { DeepPartial } from 'src/utils/types/deep-partial.type';
@@ -19,6 +19,8 @@ export abstract class UserRepository {
   }): Promise<User[]>;
 
   abstract findOne(fields: EntityCondition<User>): Promise<NullableType<User>>;
+
+  abstract findByEmail(query:QueryUserByEmailDTO): Promise<NullableType<User>>;
 
   abstract update(
     id: User['id'],

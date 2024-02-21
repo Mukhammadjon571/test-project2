@@ -1,4 +1,4 @@
-import { User } from '../../../../domain/user';
+import { User } from "../../../../users/domain/user";
 import { UserEntity } from '../entities/article.entity';
 
 

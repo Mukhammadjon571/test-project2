@@ -5,7 +5,7 @@ import { IPaginationOptions } from 'src/utils/types/pagination-options';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { UserEntity } from '../entities/user.entity';
 import { NullableType } from '../../../../../utils/types/nullable.type';
-import {  SortUserDto } from '../../../../dto/query-user.dto';
+import {  QueryUserByEmailDTO, SortUserDto } from '../../../../dto/query-user.dto';
 import { User } from '../../../../domain/user';
 import { UserRepository } from '../../user.repository';
 import { UserMapper } from '../mappers/user.mapper';
@@ -52,15 +52,16 @@ export class UsersRelationalRepository implements UserRepository {
     return entities.map((user) => UserMapper.toDomain(user));
   }
 
-  async findOne(fields: EntityCondition<User>): Promise<NullableType<User>> {
-    const entity = await this.usersRepository.findOne({
-      where: fields as FindOptionsWhere<UserEntity>,
+  async findByEmail(query:QueryUserByEmailDTO): Promise<User | null> {
+    const userEntity = await this.usersRepository.findOne({
+      where: { email:query.email }, 
     });
 
-    return entity ? UserMapper.toDomain(entity) : null;
+    return userEntity ? UserMapper.toDomain(userEntity) : null;
   }
 
-  async findByEmail(fields: EntityCondition<User>): Promise<NullableType<User>> {
+
+  async findOne(fields: EntityCondition<User>): Promise<NullableType<User>> {
     const entity = await this.usersRepository.findOne({
       where: fields as FindOptionsWhere<UserEntity>,
     });

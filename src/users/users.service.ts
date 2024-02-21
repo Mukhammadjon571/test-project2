@@ -62,9 +62,10 @@ export class UsersService {
     return this.usersRepository.findOne(fields);
   }
 
-  findWithUsername(queryUserByEmailDto:QueryUserByEmailDTO){
-    
+  findByEmail(query:QueryUserByEmailDTO): Promise<User> {
+    return this.usersRepository.findByEmail(query)
   }
+  
 
   async update(
     id: User['id'],

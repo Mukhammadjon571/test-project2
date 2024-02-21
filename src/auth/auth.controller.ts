@@ -14,15 +14,12 @@ import {
   import { AuthService } from './auth.service';
   import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
   import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
-  import { AuthForgotPasswordDto } from './dto/auth-forgot-password.dto';
-  import { AuthConfirmEmailDto } from './dto/auth-confirm-email.dto';
-  import { AuthResetPasswordDto } from './dto/auth-reset-password.dto';
-  import { AuthUpdateDto } from './dto/auth-update.dto';
   import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
   import { LoginResponseType } from './types/login-response.type';
   import { NullableType } from '../utils/types/nullable.type';
   import { User } from '../users/domain/user';
   import { AuthGuard } from '@nestjs/passport';
+import { RegisterResponseType } from './types/register-response.type';
   
   @ApiTags('Auth')
   @Controller({
@@ -45,7 +42,7 @@ import {
   
     @Post('register')
     @HttpCode(HttpStatus.NO_CONTENT)
-    async register(@Body() createUserDto: AuthRegisterLoginDto): Promise<void> {
+    async register(@Body() createUserDto: AuthRegisterLoginDto): Promise<RegisterResponseType> {
       return this.service.register(createUserDto);
     }
 

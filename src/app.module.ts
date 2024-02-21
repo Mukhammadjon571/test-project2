@@ -6,8 +6,7 @@ import { TypeOrmConfigService } from './database/typeorm-config.service';
 import { DataSource, DataSourceOptions } from 'typeorm';
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-import { TokensModule } from './tokens/tokens.module';
-import { SessionsModule } from './sessions/sessions.module';
+import { SessionModule } from './sessions/sessions.module'
 import { ArticlesModule } from './articles/articles.module';
 
 @Module({
@@ -20,8 +19,7 @@ import { ArticlesModule } from './articles/articles.module';
     }),
     AuthModule,
     UsersModule,
-    TokensModule,
-    SessionsModule,
+    SessionModule,
     ArticlesModule,
   ],
   controllers: [AppController],

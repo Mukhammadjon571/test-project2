@@ -8,7 +8,6 @@ import {
   import { JwtService } from '@nestjs/jwt';
   import bcrypt from 'bcryptjs';
   import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
-  import { AuthUpdateDto } from './dto/auth-update.dto';
   import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
   import { NullableType } from '../utils/types/nullable.type';
   import { LoginResponseType } from './types/login-response.type';
@@ -19,6 +18,7 @@ import {
   import { UsersService } from 'src/users/users.service';
   import { SessionService } from '../sessions/sessions.service';
   import configuration from '../config/index';
+import { RegisterResponseType } from './types/register-response.type';
   
   @Injectable()
   export class AuthService {
@@ -92,12 +92,47 @@ import {
     }
 
   
-    async register(dto: AuthRegisterLoginDto): Promise<void> {
-      const user = await this.usersService.create({
-          ...dto,
+    async register(dto: AuthRegisterLoginDto): Promise<RegisterResponseType> {
+      const existingUser = await this.usersService.findByEmail({
+          email:dto.email
       });
+
+      if (existingUser) {
+        throw new HttpException(
+          {
+            status: HttpStatus.UNPROCESSABLE_ENTITY,
+            errors: {
+              email: 'Email already exists',
+            },
+          },
+          HttpStatus.UNPROCESSABLE_ENTITY,
+        );
+      }
+
+      const hashedPassword = await bcrypt.hash(dto.password, 10); 
+
+      const newUser = await this.usersService.create({
+          email: dto.email,
+          password: hashedPassword,
+          username:dto.username
+      });
+  
+      const session = await this.sessionService.create({
+          user: newUser,
+      });
+  
+      const { token, refreshToken, tokenExpires } = await this.getTokensData({
+          id: newUser.id,
+          sessionId: session.id,
+      });
+  
+      return {
+          refreshToken,
+          token,
+          tokenExpires,
+          user: newUser,
+      };
     }
-    
    
     async me(userJwtPayload: JwtPayloadType): Promise<NullableType<User>> {
       return this.usersService.findOne({

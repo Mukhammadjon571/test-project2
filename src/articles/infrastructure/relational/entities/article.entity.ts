@@ -10,7 +10,7 @@ import {
 import { EntityRelationalHelper } from 'src/utils/relational-entity-helper';
 
 import { Exclude, Expose } from 'class-transformer';
-import { User } from '../../../../domain/user';
+import { User } from "../../../../users/domain/user"
 
 @Entity({
   name: 'user',
