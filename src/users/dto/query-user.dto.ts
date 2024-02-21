@@ -4,6 +4,8 @@ import {
   IsOptional,
   IsString,
   ValidateNested,
+  IsNotEmpty,
+  IsEmail
 } from 'class-validator';
 import { Transform, Type, plainToInstance } from 'class-transformer';
 import { User } from '../domain/user';
@@ -45,4 +47,10 @@ export class QueryUserDto {
   @ValidateNested({ each: true })
   @Type(() => SortUserDto)
   sort?: SortUserDto[] | null;
+}
+
+export class QueryUserByEmailDTO {
+  @IsNotEmpty()
+  @IsEmail()
+  email: string | null;
 }

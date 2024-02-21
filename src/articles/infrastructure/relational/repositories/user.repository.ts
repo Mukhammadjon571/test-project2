@@ -3,10 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { EntityCondition } from 'src/utils/types/entity-condition.type';
 import { IPaginationOptions } from 'src/utils/types/pagination-options';
 import { FindOptionsWhere, Repository } from 'typeorm';
-import { UserEntity } from '../entities/user.entity';
-import { NullableType } from '../../../../utils/types/nullable.type';
-import {  SortUserDto } from '../../../dto/query-user.dto';
-import { User } from '../../../domain/user';
+import { UserEntity } from '../entities/article.entity';
+import { NullableType } from '../../../../../utils/types/nullable.type';
+import {  SortUserDto } from '../../../../dto/query-user.dto';
+import { User } from '../../../../domain/user';
 import { UserRepository } from '../../user.repository';
 import { UserMapper } from '../mappers/user.mapper';
 

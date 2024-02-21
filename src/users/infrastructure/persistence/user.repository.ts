@@ -1,13 +1,13 @@
-import { User } from '../domain/user';
+import { User } from '../../domain/user';
 import { NullableType } from 'src/utils/types/nullable.type';
-import {  SortUserDto } from '../dto/query-user.dto';
+import {  SortUserDto } from '../../dto/query-user.dto';
 import { IPaginationOptions } from 'src/utils/types/pagination-options';
 import { EntityCondition } from 'src/utils/types/entity-condition.type';
 import { DeepPartial } from 'src/utils/types/deep-partial.type';
 
 export abstract class UserRepository {
   abstract create(
-    data: Omit<User, 'id' | 'createdAt' | 'deletedAt' | 'updatedAt'>,
+    data: Omit<User, 'id' | 'createdAt' | 'isActive' | 'updatedAt'>,
   ): Promise<User>;
 
   abstract findManyWithPagination({

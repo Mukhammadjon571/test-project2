@@ -1,0 +1,9 @@
+import { User } from 'src/users/domain/user';
+
+export class Session {
+  id: number | string;
+  user: User;
+  createdAt: Date;
+  isActive:boolean;
+}
+ 

@@ -21,7 +21,8 @@ import {
   import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
   import { LoginResponseType } from './types/login-response.type';
   import { NullableType } from '../utils/types/nullable.type';
-  import { User } from 'src/users/domain/user';
+  import { User } from '../users/domain/user';
+  import { AuthGuard } from '@nestjs/passport';
   
   @ApiTags('Auth')
   @Controller({
@@ -34,7 +35,7 @@ import {
     @SerializeOptions({
       groups: ['me'],
     })
-    @Post('email/login')
+    @Post('/login')
     @HttpCode(HttpStatus.OK)
     public login(
       @Body() loginDto: AuthEmailLoginDto,
@@ -42,37 +43,13 @@ import {
       return this.service.validateLogin(loginDto);
     }
   
-    @Post('email/register')
+    @Post('register')
     @HttpCode(HttpStatus.NO_CONTENT)
     async register(@Body() createUserDto: AuthRegisterLoginDto): Promise<void> {
       return this.service.register(createUserDto);
     }
-  
-    @Post('email/confirm')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    async confirmEmail(
-      @Body() confirmEmailDto: AuthConfirmEmailDto,
-    ): Promise<void> {
-      return this.service.confirmEmail(confirmEmailDto.hash);
-    }
-  
-    @Post('forgot/password')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    async forgotPassword(
-      @Body() forgotPasswordDto: AuthForgotPasswordDto,
-    ): Promise<void> {
-      return this.service.forgotPassword(forgotPasswordDto.email);
-    }
-  
-    @Post('reset/password')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    resetPassword(@Body() resetPasswordDto: AuthResetPasswordDto): Promise<void> {
-      return this.service.resetPassword(
-        resetPasswordDto.hash,
-        resetPasswordDto.password,
-      );
-    }
-  
+
+
     @ApiBearerAuth()
     @SerializeOptions({
       groups: ['me'],
@@ -107,19 +84,6 @@ import {
       });
     }
   
-    @ApiBearerAuth()
-    @SerializeOptions({
-      groups: ['me'],
-    })
-    @Patch('me')
-    @UseGuards(AuthGuard('jwt'))
-    @HttpCode(HttpStatus.OK)
-    public update(
-      @Request() request,
-      @Body() userDto: AuthUpdateDto,
-    ): Promise<NullableType<User>> {
-      return this.service.update(request.user, userDto);
-    }
   
     @ApiBearerAuth()
     @Delete('me')
