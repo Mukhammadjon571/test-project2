@@ -24,7 +24,7 @@ import {
   import { UsersService } from './users.service';
   
   @ApiBearerAuth()
-//   @UseGuards(AuthGuard('jwt'), RolesGuard)
+  @UseGuards(AuthGuard('jwt'))
   @ApiTags('Users')
   @Controller({
     path: 'users',

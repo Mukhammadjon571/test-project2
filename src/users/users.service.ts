@@ -7,7 +7,7 @@ import {  QueryUserByEmailDTO, SortUserDto } from './dto/query-user.dto';
 import { UserRepository } from './infrastructure/persistence/user.repository';
 import { DeepPartial } from 'src/utils/types/deep-partial.type';
 import { User } from './domain/user';
-import bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UsersService {

@@ -4,7 +4,7 @@ export class Token1708165131326 implements MigrationInterface {
 
     public async up(queryRunner: QueryRunner): Promise<void> {
         await queryRunner.query(`
-            CREATE TABLE "tokens" (
+            CREATE TABLE "sessions" (
                 "id" SERIAL PRIMARY KEY,
                 "issuedDate" TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
                 "accessToken" VARCHAR(1024),

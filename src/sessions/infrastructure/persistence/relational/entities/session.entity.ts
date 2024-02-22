@@ -26,6 +26,6 @@ export class SessionEntity extends EntityRelationalHelper implements Session {
   @CreateDateColumn()
   createdAt: Date;
 
-  @Column()
+  @Column('boolean', {default: true})
   isActive: boolean;
 }

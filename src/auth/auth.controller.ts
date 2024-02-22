@@ -40,9 +40,11 @@ import { RegisterResponseType } from './types/register-response.type';
       return this.service.validateLogin(loginDto);
     }
   
-    @Post('register')
-    @HttpCode(HttpStatus.NO_CONTENT)
-    async register(@Body() createUserDto: AuthRegisterLoginDto): Promise<RegisterResponseType> {
+    @Post('/register')
+    @HttpCode(HttpStatus.OK)
+    async register(
+      @Body() createUserDto: AuthRegisterLoginDto
+    ): Promise<RegisterResponseType> {
       return this.service.register(createUserDto);
     }
 

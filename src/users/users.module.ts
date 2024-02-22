@@ -11,4 +11,5 @@ import { RelationalUserPersistenceModule } from './infrastructure/persistence/re
   providers: [UsersService],
   exports: [UsersService, RelationalUserPersistenceModule],
 })
+
 export class UsersModule {}

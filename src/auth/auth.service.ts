@@ -4,9 +4,8 @@ import {
     Injectable,
     UnauthorizedException,
   } from '@nestjs/common';
-  import ms from 'ms';
   import { JwtService } from '@nestjs/jwt';
-  import bcrypt from 'bcryptjs';
+  import * as bcrypt from 'bcryptjs';
   import { AuthEmailLoginDto } from './dto/auth-email-login.dto';
   import { AuthRegisterLoginDto } from './dto/auth-register-login.dto';
   import { NullableType } from '../utils/types/nullable.type';
@@ -19,6 +18,7 @@ import {
   import { SessionService } from '../sessions/sessions.service';
   import configuration from '../config/index';
 import { RegisterResponseType } from './types/register-response.type';
+import ms from 'ms';
   
   @Injectable()
   export class AuthService {
@@ -109,13 +109,8 @@ import { RegisterResponseType } from './types/register-response.type';
         );
       }
 
-      const hashedPassword = await bcrypt.hash(dto.password, 10); 
-
-      const newUser = await this.usersService.create({
-          email: dto.email,
-          password: hashedPassword,
-          username:dto.username
-      });
+ 
+      const newUser = await this.usersService.create(dto);
   
       const session = await this.sessionService.create({
           user: newUser,
@@ -179,8 +174,8 @@ import { RegisterResponseType } from './types/register-response.type';
     }) {
       const tokenExpiresIn = configuration.authToken.accessTokenExpiresIn;
   
-      const tokenExpires = Date.now() + ms(tokenExpiresIn);
-  
+      const tokenExpires = Date.now()+ms(tokenExpiresIn)
+
       const [token, refreshToken] = await Promise.all([
         await this.jwtService.signAsync(
           {

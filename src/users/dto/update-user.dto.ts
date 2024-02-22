@@ -22,6 +22,4 @@ export class UpdateUserDto extends PartialType(CreateUserDto) {
   @ApiProperty({ example: 'John' })
   @IsOptional()
   username?: string | null;
-
-  hash?: string | null;
 }

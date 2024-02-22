@@ -16,6 +16,9 @@ import { User } from '../../../../domain/user';
   name: 'user',
 })
 export class UserEntity extends EntityRelationalHelper implements User {
+  static toPersistence(user: any): any {
+    throw new Error("Method not implemented.");
+  }
   @PrimaryGeneratedColumn()
   id: number;
  
@@ -38,6 +41,6 @@ export class UserEntity extends EntityRelationalHelper implements User {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @Column()
+  @Column('boolean', {default: true})
   isActive: boolean;
 }
